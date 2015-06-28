@@ -57,8 +57,22 @@ app.post('/login', function(request, response) {
 	});
 });
 
-var server = app.listen(5000, function() {
-	var host = server.address().address;
-	var port = server.address().port;
-	console.log('Server listening on %s:%s', host, port);
+app.all('/service/:service', function(request, response) {
+	httpRequest({
+		jar: false,
+		meothod: request.method,
+		url: hackathon_options.server + '/' + request.param('service'),
+		headers: {
+			'Authorization': request.headers.authorization
+		}
+	}, function(error, res, body) {
+		if (error) { response.status(500).send('Error calling service').end(); }
+		response.send(body);
+		response.end();
+	});
+});
+
+var port = 5000;
+var server = app.listen(port, function() {
+	console.log('Server listening on http://localhost:%s/', port);
 });

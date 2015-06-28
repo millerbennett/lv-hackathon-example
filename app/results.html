@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Longview Hackathon Example App : Resuts</title>
+		<script>
+		function fetchData() {
+			var authorizationToken = window.localStorage.getItem('token');
+			function requestCallback() {
+				console.log(this.responseText);
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/service/' + encodeURIComponent('MobileHealthPlatformWeb/rest/user-session'));
+			xhr.setRequestHeader('Authorization', 'Bearer ' + authorizationToken);
+			xhr.onload = requestCallback;
+			xhr.send();
+		}
+		</script>
+	</head>
+
+	<body onload="fetchData()">
+		
+	</body>
+</html>
