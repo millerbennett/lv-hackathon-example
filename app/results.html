@@ -5,6 +5,7 @@
 		<script>
 		function fetchData() {
 			var authorizationToken = window.localStorage.getItem('token');
+			if (!authorizationToken) { window.location.href = '/'; }
 			function requestCallback() {
 				var user = JSON.parse(this.responseText)['ns3:userSession']['ns3:mhpuser'];
 				document.querySelector('#displayName').textContent = user.displayName;
@@ -23,6 +24,8 @@
 	</head>
 
 	<body onload="fetchData()">
+		<h1>Congratulations!</h1>
+		<h2>Logged in as:</h2>
 		<div id="user-info">
 			<div><span class="label">Display Name</span> <span id="displayName"></span></div>
 			<div><span class="label">Name</span> <span id="lastName"></span>, <span id="firstName"></span></div>
