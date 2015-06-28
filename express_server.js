@@ -8,6 +8,7 @@ var express = require('express');
 var http = require('http');
 var cookie = require('tough-cookie');
 var bodyParser = require('body-parser');
+var xmlToJson = require('xml2json');
 var httpRequest = require('request').defaults({
 	jar: true // enables cookie persistance accross headless http requests
 });
@@ -67,7 +68,9 @@ app.all('/service/:service', function(request, response) {
 		}
 	}, function(error, res, body) {
 		if (error) { response.status(500).send('Error calling service').end(); }
-		response.send(body);
+		console.log(xmlToJson.toJson(body));
+		response.set('Content-Type', 'application/json');
+		response.send(xmlToJson.toJson(body));
 		response.end();
 	});
 });

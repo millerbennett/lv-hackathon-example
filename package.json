@@ -8,6 +8,7 @@
     "body-parser": "^1.13.1",
     "express": "^4.13.0",
     "request": "^2.58.0",
-    "tough-cookie": "^2.0.0"
+    "tough-cookie": "^2.0.0",
+    "xml2json": "^0.7.1"
   }
 }

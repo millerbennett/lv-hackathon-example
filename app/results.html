@@ -6,7 +6,12 @@
 		function fetchData() {
 			var authorizationToken = window.localStorage.getItem('token');
 			function requestCallback() {
-				console.log(this.responseText);
+				var user = JSON.parse(this.responseText)['ns3:userSession']['ns3:mhpuser'];
+				document.querySelector('#displayName').textContent = user.displayName;
+				document.querySelector('#firstName').textContent = user.firstName;
+				document.querySelector('#lastName').textContent = user.lastName;
+				document.querySelector('#facilityName').textContent = user.facilityName;
+				document.querySelector('#dfn').textContent = user.userIdentifier.assigningAuthority;
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', '/service/' + encodeURIComponent('MobileHealthPlatformWeb/rest/user-session'));
@@ -18,6 +23,11 @@
 	</head>
 
 	<body onload="fetchData()">
-		
+		<div id="user-info">
+			<div><span class="label">Display Name</span> <span id="displayName"></span></div>
+			<div><span class="label">Name</span> <span id="lastName"></span>, <span id="firstName"></span></div>
+			<div><span class="label">Facility Name</span> <span id="facilityName"></span></div>
+			<div><span class="label">DFN</span> <span id="dfn"></span></div>
+		</div>
 	</body>
 </html>
