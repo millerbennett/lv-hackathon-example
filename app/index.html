@@ -2,11 +2,16 @@
 <html>
 	<head>
 		<title>Longview Hackathon Example App</title>
+		<link type="text/css" rel="stylesheet" href="style.css" />
 		<script>
 		function handleLogin(ev) {
-			function requestCallback() {
-				window.localStorage.setItem('token', this.responseText);
-				window.location.href = 'results.html';
+			function requestCallback(e) {
+				if (e.target.status === 200) {
+					window.localStorage.setItem('token', this.responseText);
+					window.location.href = 'results.html';
+				} else {
+					document.querySelector('.error').className = "error";
+				}
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', '/login');
@@ -30,12 +35,20 @@
 	</head>
 
 	<body>
-		<form onsubmit="handleLogin(event)">
-			<label for="username">Access Code</label>
-			<input type="text" id="username" name="username" placeholder="Access Code" />
-			<label for="password">Verify Code</label>
-			<input type="text" id="password" name="password" placeholder="Verify Code" />
-			<input type="submit" value="Login" />
-		</form>
+		<div class="container" id="login-form">
+			<h1 class='box-header gradient'>Login</h1>
+			<form onsubmit="handleLogin(event)">
+				<div class="error hidden">Invalid login attempt. Please try again.</div>
+				<div class="input-group">
+					<label for="username">Access Code</label>
+					<input type="password" id="username" name="username" placeholder="Access Code" />
+				</div>
+				<div class="input-group">
+					<label for="password">Verify Code</label>
+					<input type="password" id="password" name="password" placeholder="Verify Code" />
+				</div>
+				<input type="submit" value="Login" class="gradient" />
+			</form>
+		</div>
 	</body>
 </html>

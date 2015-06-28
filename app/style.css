@@ -1,0 +1,55 @@
+body {
+	background: #044F85;
+}
+
+body:after {
+	content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(va-logo.png) center center no-repeat; 
+    width: 100%;
+    height: 100%;
+    opacity : 0.1;
+    z-index: -1;
+}
+
+.gradient {
+	background: #0072c4; /* Old browsers */
+	background: linear-gradient(to bottom,  #0072c4 0%,#044f85 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0072c4', endColorstr='#044f85',GradientType=0 ); /* IE6-9 */
+	color: white;
+}
+
+.box-header {
+	margin: 0;
+	padding: 10px 20px;
+}
+
+.container {
+	margin: auto;
+	max-width: 400px;
+	box-shadow: 3px 3px 6px #333;
+	background: white;
+}
+
+form {
+	padding: 20px;
+}
+
+.input-group {
+	margin-bottom: 20px;
+}
+.input-group label {
+	display: inline-block;
+	width: 100px;
+}
+.input-group input[type="text"], .input-group input[type="password"] {
+	padding: 10px;
+}
+input[type="submit"] {
+	border: 0;
+	padding: 10px 20px;
+	cursor: pointer;
+}

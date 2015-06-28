@@ -36,21 +36,19 @@ app.post('/login', function(request, response) {
 			'facilityName': hackathon_options.facilityName
 		}
 	}, function (error, res, body) {
-		console.log(error);
-		console.log(res);
-		console.log(body);
-
-		if (error) { response.status(500).send('Error during the login process').end(); }
+		if (error) { console.log(error); response.status(500).send('Error during the login process').end(); }
 
 		httpRequest.get(hackathon_options.server + '/AuthorizationServices/provider/authorize?' + 
 				'response_type=code&state=stateId&client_id=MobileBlueButton&redirect_uri=' + 
 				hackathon_options.server + '/MobileHealthPlatformWeb/oauthtoken?original_redirect_uri%3D' + 
 				hackathon_options.app + '/token&scope=read', 
 			function(error, res, body) {
-			console.log(error);
-			console.log(res);
+			console.log("FRB");
+			//console.log(error);
+			//console.log(res);
 			console.log(body);
 
+			if (!/^[\w\d-]+$/.test(body)) { response.status(400).end(); return; }
 			if (error) { response.status(500).send('Error during the login process').end(); }
 			response.send(body);
 			response.end();
