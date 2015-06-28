@@ -61,7 +61,7 @@ app.all('/service/:service', function(request, response) {
 		}
 	}, function(error, res, body) {
 		if (error) { response.status(500).send('Error calling service').end(); }
-		var responseBody = '';
+		var responseBody = body;
 		console.log(res);
 
 		if (body && /application\/xml/.test(res.headers['content-type'])) {
