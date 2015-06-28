@@ -41,13 +41,8 @@ app.post('/login', function(request, response) {
 		httpRequest.get(hackathon_options.server + '/AuthorizationServices/provider/authorize?' + 
 				'response_type=code&state=stateId&client_id=MobileBlueButton&redirect_uri=' + 
 				hackathon_options.server + '/MobileHealthPlatformWeb/oauthtoken?original_redirect_uri%3D' + 
-				hackathon_options.app + '/token&scope=read', 
-			function(error, res, body) {
-			console.log("FRB");
-			//console.log(error);
-			//console.log(res);
+				hackathon_options.app + '/token&scope=read',  function(error, res, body) {
 			console.log(body);
-
 			if (!/^[\w\d-]+$/.test(body)) { response.status(400).end(); return; }
 			if (error) { response.status(500).send('Error during the login process').end(); }
 			response.send(body);
@@ -66,9 +61,16 @@ app.all('/service/:service', function(request, response) {
 		}
 	}, function(error, res, body) {
 		if (error) { response.status(500).send('Error calling service').end(); }
-		console.log(xmlToJson.toJson(body));
-		response.set('Content-Type', 'application/json');
-		response.send(xmlToJson.toJson(body));
+		var responseBody = '';
+		console.log(res);
+
+		if (body && /application\/xml/.test(res.headers['content-type'])) {
+			console.log(xmlToJson.toJson(body));
+			response.set('Content-Type', 'application/json');
+			responseBody = xmlToJson.toJson(body);
+		}
+
+		response.send(responseBody);
 		response.end();
 	});
 });

@@ -2,10 +2,13 @@
 <html>
 	<head>
 		<title>Longview Hackathon Example App</title>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 		<link type="text/css" rel="stylesheet" href="style.css" />
 		<script>
 		function handleLogin(ev) {
+			document.querySelector('.loader').className = "loader";
 			function requestCallback(e) {
+				document.querySelector('.loader').className = "loader hidden";
 				if (e.target.status === 200) {
 					window.localStorage.setItem('token', this.responseText);
 					window.location.href = 'results.html';
@@ -36,8 +39,8 @@
 
 	<body>
 		<div class="container" id="login-form">
-			<h1 class='box-header gradient'>Login</h1>
-			<form onsubmit="handleLogin(event)">
+			<h1 class="box-header gradient">Login</h1>
+			<form class="content" onsubmit="handleLogin(event)">
 				<div class="error hidden">Invalid login attempt. Please try again.</div>
 				<div class="input-group">
 					<label for="username">Access Code</label>
@@ -50,5 +53,6 @@
 				<input type="submit" value="Login" class="gradient" />
 			</form>
 		</div>
+		<div class="loader hidden"></div>
 	</body>
 </html>

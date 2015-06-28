@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Longview Hackathon Example App : Results</title>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 		<link type="text/css" rel="stylesheet" href="style.css" />
 		<script>
 		function fetchData() {
@@ -9,29 +10,45 @@
 			if (!authorizationToken) { window.location.href = '/'; }
 			function requestCallback() {
 				var user = JSON.parse(this.responseText)['ns3:userSession']['ns3:mhpuser'];
-				document.querySelector('#displayName').textContent = user.displayName;
 				document.querySelector('#firstName').textContent = user.firstName;
 				document.querySelector('#lastName').textContent = user.lastName;
 				document.querySelector('#facilityName').textContent = user.facilityName;
-				document.querySelector('#dfn').textContent = user.userIdentifier.assigningAuthority;
+				document.querySelector('.loader').className = "loader hidden";
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', '/service/' + encodeURIComponent('MobileHealthPlatformWeb/rest/user-session'));
 			xhr.setRequestHeader('Authorization', 'Bearer ' + authorizationToken);
 			xhr.onload = requestCallback;
 			xhr.send();
+			document.querySelector('.loader').className = "loader";
+		}
+
+		function logOut(ev) {
+			function requestCallback() {
+				window.location.href = '/';
+				window.localStorage.removeItem('token');
+			}
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/service/' + encodeURIComponent('AuthorizationServices/logout'));
+			xhr.onload = requestCallback;
+			xhr.send();
+			ev.preventDefault();
+			document.querySelector('.loader').className = "loader";
 		}
 		</script>
 	</head>
 
 	<body onload="fetchData()">
-		<h1>Congratulations!</h1>
-		<h2>Logged in as:</h2>
-		<div id="user-info">
-			<div><span class="label">Display Name</span> <span id="displayName"></span></div>
-			<div><span class="label">Name</span> <span id="lastName"></span>, <span id="firstName"></span></div>
-			<div><span class="label">Facility Name</span> <span id="facilityName"></span></div>
-			<div><span class="label">DFN</span> <span id="dfn"></span></div>
+		<div class="container">
+			<h1 class="box-header gradient">Congratulations!</h1>
+			<div class="content" id="user-info">
+				<h2>Logged in as:</h2>
+				<div><span class="label">Name</span> <span id="lastName"></span>, <span id="firstName"></span></div>
+				<div><span class="label">Facility Name</span> <span id="facilityName"></span></div>
+				<input type="submit" value="Log Out" class="gradient" onclick="logOut(event)" />
+			</div>
 		</div>
+		<div class="loader hidden"></div>
 	</body>
 </html>
