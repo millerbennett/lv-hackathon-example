@@ -1,7 +1,7 @@
 var http = require('http');
 var cookie = require('tough-cookie');
 var request = require('request').defaults({
-	jar: true
+	jar: true // enables cookie persistance accross headless http requests
 });
 var hackathon_options = {
 	server: 'http://localhost:8080',
@@ -18,7 +18,7 @@ var server = http.createServer(function (request, response) {
 	// mobile health web platform services, for example:
 
 	// ***** Http Request
-	// Authorization: Bearer de17c50a-1063-4676-9d02-a3fe64b75112
+	// Authorization: Bearer 8e17c50a-1063-9676-9d02-c3fe64b75112
 	// *****
 	var authorizationToken = /token=([\w\d-]+)/.exec(request.url)[1];
 	response.writeHead(200, { 'Content-Type': 'text/html' });

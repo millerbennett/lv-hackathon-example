@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Longview Hackathon Example App</title>
+		<script>
+		function handleLogin(ev) {
+			function requestCallback() {
+				console.log(this.responseText);
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/login', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.onload = requestCallback;
+			var data = {
+				'username': document.querySelector('#username').value,
+				'password': document.querySelector('#password').value
+			};
+			var formData = (function(data) {
+				var out = [];
+				Object.keys(data).forEach(function(key) {
+					out.push(key + '=' + encodeURIComponent(data[key]));
+				});
+				return out.join('&');
+			})(data);
+			xhr.send(formData);
+			ev.preventDefault();
+		}
+		</script>
+	</head>
+
+	<body>
+		<form onsubmit="handleLogin(event)">
+			<label for="username">Access Code</label>
+			<input type="text" id="username" name="username" placeholder="Access Code" />
+			<label for="password">Verify Code</label>
+			<input type="text" id="password" name="password" placeholder="Verify Code" />
+			<input type="submit" value="Login" />
+		</form>
+	</body>
+</html>
