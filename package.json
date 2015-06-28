@@ -1,9 +1,7 @@
 {
   "name": "lv-hackathon-example",
-  "version": "0.1.0",
-  "devDependencies": {
-    "gulp": "^3.9.0"
-  },
+  "version": "1.0.0",
+  "devDependencies": {},
   "dependencies": {
     "body-parser": "^1.13.1",
     "express": "^4.13.0",
