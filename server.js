@@ -54,7 +54,7 @@ app.post('/login', function(request, response) {
 app.all('/service/:service', function(request, response) {
 	httpRequest({
 		jar: false,
-		meothod: request.method,
+		method: request.method,
 		url: hackathon_options.server + '/' + request.param('service'),
 		headers: {
 			'Authorization': request.headers.authorization
